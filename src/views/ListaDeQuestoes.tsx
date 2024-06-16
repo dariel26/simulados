@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Badge, Button, Col, Container, Row } from "react-bootstrap";
 import { Questao } from "../components";
 import { useCallback, useEffect, useState } from "react";
 import localstorage from "../service/localstorage";
@@ -7,18 +7,33 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function ListaDeQuestoes() {
   const [questoes, setQuestoes] = useState<IQuestao[]>([]);
+  const [numeroDeRespostas, setNumeroDeRespostas] = useState(0);
 
   const navigate = useNavigate();
   const params = useParams();
   const idSimulado = params.idSimulado;
   const idTentativa = params.idTentativa;
 
+  const numeroDeQuestoes = questoes.length;
+
+  const atualizaNumeroDeRespostas = useCallback(() => {
+    if (!idSimulado) return;
+
+    const tentativas = localstorage.getTentativas(idSimulado);
+    const tentativa = tentativas.find(
+      (tentativa) => tentativa.id === idTentativa
+    );
+
+    setNumeroDeRespostas(tentativa?.respostas.length ?? 0);
+  }, [idTentativa, idSimulado]);
+
   useEffect(() => {
     if (!idSimulado) return;
     const tentativas = localstorage.getQuestoes(idSimulado);
     setQuestoes(tentativas);
+    atualizaNumeroDeRespostas();
     return () => {};
-  }, [idSimulado]);
+  }, [idSimulado, atualizaNumeroDeRespostas]);
 
   const handleClickEnd = useCallback(() => {
     if (!idSimulado || !idTentativa) return;
@@ -34,7 +49,7 @@ export default function ListaDeQuestoes() {
 
   return (
     <Container fluid>
-      <Row>
+      <Row className="position-relative">
         <Col
           sm="12"
           className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-primary"
@@ -52,11 +67,22 @@ export default function ListaDeQuestoes() {
             </div>{" "}
           </div>
         </Col>
+        <Col
+          sm="12"
+          className="d-flex position-fixed top-0 z-2 mt-5 justify-content-end"
+        >
+          <Badge className="bg-dark">
+            Questões respondidas: {numeroDeRespostas}/{numeroDeQuestoes}
+          </Badge>
+        </Col>
         <Col sm="12" className="mb-4">
           <Row className="gap-4 pt-3">
-            {questoes.map((questao) => (
-              <Col sm="12">
-                <Questao questao={questao} />
+            {questoes.map((questao, index) => (
+              <Col sm="12" key={index}>
+                <Questao
+                  questao={questao}
+                  atualiza={atualizaNumeroDeRespostas}
+                />
               </Col>
             ))}
           </Row>

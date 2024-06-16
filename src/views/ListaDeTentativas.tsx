@@ -15,7 +15,6 @@ export default function ListaDeTentativas() {
   useEffect(() => {
     if (!idSimulado) return;
     const tentativas = localstorage.getTentativas(idSimulado);
-    console.log(tentativas);
     setTentativas(tentativas);
     return () => {};
   }, [idSimulado]);
@@ -51,8 +50,8 @@ export default function ListaDeTentativas() {
         </Col>
         <Col sm="12">
           <Row className="gap-2 pt-3">
-            {tentativas.map((tentativa) => (
-              <Col sm="12" className="my-clicavel-item bg-white user-select-none">
+            {tentativas.map((tentativa, index) => (
+              <Col key={index} sm="12" className="my-clicavel-item bg-white user-select-none">
                 <Tentativa tentativa={tentativa} />
               </Col>
             ))}

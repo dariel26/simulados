@@ -21,8 +21,8 @@ export default function ListaDeSimulados() {
         </Col>
         <Col sm="12">
           <Row className="gap-2 pt-3">
-            {simulados.map((simulado) => (
-              <Col sm="12" className="my-clicavel-item bg-white">
+            {simulados.map((simulado, index) => (
+              <Col key={index} sm="12" className="my-clicavel-item bg-white">
                 <Simulado simulado={simulado} />
               </Col>
             ))}

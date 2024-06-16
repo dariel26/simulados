@@ -9,6 +9,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 
 interface Props {
   questao: IQuestao;
+  atualiza: () => void;
 }
 
 const indices = ["A", "B", "C", "D", "E", "F", "G"];
@@ -19,7 +20,7 @@ export default function Questao(props: Props) {
   const [tentativaFinalizada, setTentativaFinalizada] =
     useState<boolean>(false);
 
-  const { questao } = props;
+  const { questao, atualiza } = props;
   const questaoCancelada =
     tentativaFinalizada && questao.alternativaCorreta === -1;
 
@@ -54,8 +55,9 @@ export default function Questao(props: Props) {
         indexSelecionado: index,
       });
       setIndexSelecionado(index);
+      atualiza();
     },
-    [idSimulado, idTentativa, questao]
+    [idSimulado, idTentativa, questao, atualiza]
   );
 
   return (
@@ -80,7 +82,7 @@ export default function Questao(props: Props) {
         </Col>
         {questao.imagens &&
           questao.imagens.map((imagem) => (
-            <Col sm="12" className="mt-2">
+            <Col sm="12" className="mt-2" key={imagem}>
               <Stack className="d-flex w-100 align-items-center">
                 <PhotoProvider>
                   <PhotoView src={`/${imagem}.png`}>
@@ -100,7 +102,7 @@ export default function Questao(props: Props) {
           <Col sm="12" className="mt-2">
             <Row>
               {questao.itens.map((item, index) => (
-                <Col sm="12">
+                <Col sm="12" key={index}>
                   <label>
                     <strong>{indicesRomanos[index]}-</strong> {item}
                   </label>
@@ -132,6 +134,7 @@ export default function Questao(props: Props) {
             <Form className="bg-light pt-1 pb-1 rounded border">
               {questao.alternativas.map((alternativa, index) => (
                 <Col
+                  key={index}
                   sm="12"
                   className={`${
                     tentativaFinalizada && questao.alternativaCorreta === index
@@ -145,6 +148,7 @@ export default function Questao(props: Props) {
                 >
                   <Form.Check
                     role="button"
+                    readOnly
                     onClick={() => handleOnClick(index)}
                     checked={indexSelecionado === index}
                     type="radio"
