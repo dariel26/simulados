@@ -37,12 +37,12 @@ export default function ListaDeQuestoes() {
       <Row>
         <Col
           sm="12"
-          className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-white"
+          className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-primary"
         >
           <div className="d-flex align-items-center">
             <div className="d-flex align-items-center">
               <label
-                className="text-primary me-4 fs-4"
+                className="text-secondary me-4 fs-4 my-clicavel-item"
                 onClick={handleClickBack}
                 role="button"
               >

@@ -16,13 +16,13 @@ export default function ListaDeSimulados() {
   return (
     <Container fluid>
       <Row>
-        <Col sm="12" className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-white">
-          <span className="fs-4 fw-bold">Simulados</span>
+        <Col sm="12" className="pt-1 pb-1 position-sticky sticky-top bg-primary">
+          <span className="fs-4 fw-bold text-dark user-select-none">Simulados</span>
         </Col>
         <Col sm="12">
           <Row className="gap-2 pt-3">
             {simulados.map((simulado) => (
-              <Col sm="12">
+              <Col sm="12" className="my-clicavel-item bg-white">
                 <Simulado simulado={simulado} />
               </Col>
             ))}

@@ -21,6 +21,7 @@ export interface IQuestao {
   id: string;
   numero: number;
   texto: string;
+  subTexto?: string;
   itens?: string[];
   itensVF?: string[];
   alternativas: string[];

@@ -1,9 +1,12 @@
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Container, Row, Form, Stack } from "react-bootstrap";
 import { IQuestao } from "../interfaces";
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import localstorage from "../service/localstorage";
 import "./questao.css";
+import "react-photo-view/dist/react-photo-view.css";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+
 interface Props {
   questao: IQuestao;
 }
@@ -17,6 +20,8 @@ export default function Questao(props: Props) {
     useState<boolean>(false);
 
   const { questao } = props;
+  const questaoCancelada =
+    tentativaFinalizada && questao.alternativaCorreta === -1;
 
   const params = useParams();
   const idSimulado = params.idSimulado;
@@ -54,17 +59,43 @@ export default function Questao(props: Props) {
   );
 
   return (
-    <Container fluid className="border rounded shadow pt-2 pb-2">
+    <Container
+      fluid
+      className={`position-relative bg-white border rounded shadow`}
+    >
       <Row>
-        <Col sm="12" className="fw-bold">
+        {questaoCancelada && (
+          <Col
+            sm="12"
+            className="d-flex justify-content-center align-items-center position-absolute w-100 h-100 bg-secondary bg-opacity-50"
+          >
+            <span className="display-3 text-dark fw-bold">CANCELADA</span>
+          </Col>
+        )}
+        <Col sm="12" className="fw-bold mt-2">
           Questão {questao.numero}
         </Col>
         <Col sm="12" className="mt-2">
           {questao.texto}
         </Col>
-        {questao.imagens && questao.imagens.map((imagem) => <Col sm="12" className="mt-2">
-        <img className="my-questao-imagem" src={`/${imagem}.png`} alt={`${imagem}`}/>
-        </Col>)}
+        {questao.imagens &&
+          questao.imagens.map((imagem) => (
+            <Col sm="12" className="mt-2">
+              <Stack className="d-flex w-100 align-items-center">
+                <PhotoProvider>
+                  <PhotoView src={`/${imagem}.png`}>
+                    <img
+                      className="my-questao-imagem"
+                      src={`/${imagem}.png`}
+                      alt={`${imagem}`}
+                      role="button"
+                    />
+                  </PhotoView>
+                </PhotoProvider>
+                <small className="opacity-75">Clique para visualizar</small>
+              </Stack>
+            </Col>
+          ))}
         {questao.itens && (
           <Col sm="12" className="mt-2">
             <Row>
@@ -91,9 +122,14 @@ export default function Questao(props: Props) {
             </Row>
           </Col>
         )}
-        <Col className="mt-3" sm="12">
+        {questao.subTexto && (
+          <Col sm="12" className="mt-2">
+            {questao.subTexto}
+          </Col>
+        )}
+        <Col className="mt-3 p-4" sm="12">
           <Row>
-            <Form>
+            <Form className="bg-light pt-1 pb-1 rounded border">
               {questao.alternativas.map((alternativa, index) => (
                 <Col
                   sm="12"
@@ -102,10 +138,13 @@ export default function Questao(props: Props) {
                       ? "text-success"
                       : tentativaFinalizada && indexSelecionado === index
                       ? "text-danger"
+                      : tentativaFinalizada
+                      ? "opacity-75"
                       : ""
                   }`}
                 >
                   <Form.Check
+                    role="button"
                     onClick={() => handleOnClick(index)}
                     checked={indexSelecionado === index}
                     type="radio"

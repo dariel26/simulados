@@ -51,6 +51,17 @@ export default function Tentativa(props: Props) {
             ? tentativa.pontuacao.toFixed(2)
             : "--- Você precisa finalizar esta tentativa para receber uma pontuação ---"}
         </Col>
+        {tentativa.fim && (
+          <Col sm="12">
+            Tempo médio por questão respondida:{" "}
+            {(
+              (new Date(tentativa.fim).getTime() -
+                new Date(tentativa.inicio).getTime()) /
+              (1000 * 60 * tentativa.respostas.length)
+            ).toFixed(2)}{" "}
+            min
+          </Col>
+        )}
       </Row>
     </Container>
   );

@@ -36,23 +36,23 @@ export default function ListaDeTentativas() {
       <Row>
         <Col
           sm="12"
-          className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-white"
+          className="border-bottom pt-1 pb-1 position-sticky sticky-top bg-primary"
         >
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center user-select-none">
             <label
-              className="text-primary me-4 fs-4"
+              className="text-primary me-4 fs-4 my-clicavel-item"
               onClick={handleClickBack}
               role="button"
             >
-              <i className="bi bi-arrow-left-circle-fill"></i>
+              <i className="bi bi-arrow-left-circle-fill text-secondary"></i>
             </label>
-            <span className="fs-4 fw-bold">Tentativas</span>
+            <span className="fs-4 fw-bold text-dark">Tentativas</span>
           </div>
         </Col>
         <Col sm="12">
           <Row className="gap-2 pt-3">
             {tentativas.map((tentativa) => (
-              <Col sm="12">
+              <Col sm="12" className="my-clicavel-item bg-white user-select-none">
                 <Tentativa tentativa={tentativa} />
               </Col>
             ))}

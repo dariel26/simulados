@@ -1,7 +1,12 @@
-//$theme-colors: (
-//  'info': tomato,
-//  'danger': teal
-//);
+$theme-colors: (
+  "danger": #ee4266,
+  "primary": #7cc6fe,
+  "dark": #001829,
+  "light": #f4faff,
+  "success": #35605a,
+  "warning": #ffb30f,
+  "secondary": #e6e8ef,
+);
 
 /* import bootstrap to set changes */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
