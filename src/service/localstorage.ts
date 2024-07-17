@@ -1,5 +1,6 @@
 import { IQuestao, IResposta, ISimulado, ITentativa } from "../interfaces";
 import questoes1 from "./questoes/simulado1";
+import questoes10 from "./questoes/simulado10";
 import questoes2 from "./questoes/simulado2";
 import questoes3 from "./questoes/simulado3";
 import questoes4 from "./questoes/simulado4";
@@ -144,6 +145,8 @@ function getQuestoes(id: string): IQuestao[] {
       return questoes8;
     case "9":
       return questoes9;
+    case "10":
+      return questoes10;
     default:
       return [];
   }
@@ -175,5 +178,10 @@ const simulados: ISimulado[] = [
     id: "9",
     nome: "Prova 3 - (18/07/2024)",
     tentativas: getTentativas("9").length,
+  },
+  {
+    id: "10",
+    nome: "Prova 4 - (18/07/2024)",
+    tentativas: getTentativas("10").length,
   },
 ];
