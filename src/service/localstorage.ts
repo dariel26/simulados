@@ -7,6 +7,7 @@ import questoes5 from "./questoes/simulado5";
 import questoes6 from "./questoes/simulado6";
 import questoes7 from "./questoes/simulado7";
 import questoes8 from "./questoes/simulado8";
+import questoes9 from "./questoes/simulado9";
 
 function getSimulados(): ISimulado[] {
   return simulados;
@@ -141,6 +142,8 @@ function getQuestoes(id: string): IQuestao[] {
       return questoes7;
     case "8":
       return questoes8;
+    case "9":
+      return questoes9;
     default:
       return [];
   }
@@ -168,4 +171,9 @@ const simulados: ISimulado[] = [
   { id: "6", nome: "Prova 6", tentativas: getTentativas("6").length },
   { id: "7", nome: "Prova 7", tentativas: getTentativas("7").length },
   { id: "8", nome: "Prova 8", tentativas: getTentativas("8").length },
+  {
+    id: "9",
+    nome: "Prova 3 - (18/07/2024)",
+    tentativas: getTentativas("9").length,
+  },
 ];
